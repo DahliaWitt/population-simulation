@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="/js/lib/dummy.js"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+
+  
+    
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    
+  
+
+  <style type="text/css">
+    
+  </style>
+
+  <title>Population Simulation</title>
+
+  
+    
+
+
+
+
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+var parent = 10;
+var offspring = 0;
+var toss1;
+var toss2;
+var results = [];
+results[0] = 10;
+var lineChartData = {
+  labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+  datasets: [{
+    label: "Population",
+    fillColor: "rgba(220,220,220,0.2)",
+    strokeColor: "rgba(220,220,220,1)",
+    pointColor: "rgba(220,220,220,1)",
+    pointStrokeColor: "#fff",
+    pointHighlightFill: "#fff",
+    pointHighlightStroke: "rgba(220,220,220,1)",
+    data: results
+  }]
+}
+
+document.getElementById("testButton").addEventListener("click", test, false);
+
+function test() {
+  location.reload();
+}
+
+for (var i = 1; i < 11; i++) {
+
+  sim();
+}
+
+
+var ctx = document.getElementById("canvas").getContext("2d");
+window.myLine = new Chart(ctx).Line(lineChartData, {
+  responsive: true
+});
+
+
+function sim() {
+  while (parent != 0) {
+    function roll() {
+      toss1 = Math.floor(Math.random() * 2) == 0;
+      toss2 = Math.floor(Math.random() * 2) == 0;
+      //console.log(offspring);
+    }
+    roll();
+
+    if (toss1 && toss2) {
+      //Heads
+      //console.log("both heads");
+      roll();
+    } else if (toss1 && !toss2) {
+      //console.log(1);
+      parent--
+      offspring += 2
+      roll();
+    } else if (!toss1 && toss2) {
+      //console.log(5);
+      parent--
+      offspring += 2
+      roll();
+    } else {
+      //console.log("both tails");
+      parent--
+      roll();
+    }
+  }
+  results[i] = offspring;
+  console.log("GENERATION " + i + ":" + offspring);
+  parent = offspring;
+  offspring = 0;
+  console.log(results);
+}
+
+}//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+  <h1>
+Population Simulation
+</h1>
+<p>
+  Small peice of software to simulate science experiment. Made by Drake Witt.
+</p>
+<button id="testButton">
+  Run Experiment Again (10 Generations)
+</button>
+<div>
+  <div>
+    <canvas id="canvas" height="450" width="600"></canvas>
+  </div>
+</div>
+
+  
+</body>
+
+</html>
